@@ -30,16 +30,13 @@ function createElement(galleryItems) {
 
 function elementClick(event) {
   event.preventDefault(); //запрет на открытие новой вкладки
+  openModal();
+}
 
-  //   const instance = basicLightbox.create(`
-  //       <div class="modal">
-  //           <p>
-  //               Your first lightbox with just a few lines of code.
-  //               Yes, it's really that simple.
-  //           </p>
-  //       </div>
-  //   `);
-
-  //   instance.show();
-  console.log(event.target);
+function openModal() {
+  const targetPicture = event.target.dataset.source;
+  const modal = basicLightbox.create(`
+		<img src="${targetPicture}">
+	`);
+  modal.show();
 }
