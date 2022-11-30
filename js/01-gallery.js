@@ -7,7 +7,7 @@ const galleryEl = document.querySelector('.gallery');
 const galleryItem = createElement(galleryItems);
 
 galleryEl.insertAdjacentHTML('beforeend', galleryItem);
-galleryEl.addEventListener('click', elementClick);
+galleryEl.addEventListener('click', openModal);
 
 function createElement(galleryItems) {
   return galleryItems
@@ -28,15 +28,22 @@ function createElement(galleryItems) {
     .join('');
 }
 
-function elementClick(event) {
+function openModal(event) {
   event.preventDefault(); //запрет на открытие новой вкладки
-  openModal();
-}
-
-function openModal() {
   const targetPicture = event.target.dataset.source;
   const modal = basicLightbox.create(`
 		<img src="${targetPicture}">
 	`);
   modal.show();
+
+  if (modal.show()) {
+    window.addEventListener('keydown', event => {
+      if (event.key != 'Escape') {
+        return;
+      } else {
+        modal.close();
+        window.removeEventListener('keydown', event);
+      }
+    });
+  }
 }
